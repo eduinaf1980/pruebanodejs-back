@@ -25,7 +25,7 @@ export const createUsers = async (req, res) => {
         });
         
     }catch(error){
-        return res.status(500).json({"ok": false, message: error.message});
+        return res.status(200).json({"ok": false, message: error.message});
     }
 }
 
@@ -41,7 +41,7 @@ export const loginUsers = async (req, res) => {
             }
         }).then(user => {
             if(!user){
-                res.status(404).json({"ok": false, "message": "El usuario no existe"});
+                res.status(200).json({"ok": false, "message": "El usuario no existe"});
             }else{
                 if(bcrypt.compareSync(pass, user.password)){
                     let token = jwt.sign({user: user}, "andf1980", {expiresIn: "12h"});
@@ -52,12 +52,12 @@ export const loginUsers = async (req, res) => {
                         "message": "Usuario logueado satisfactoriamente"
                     });
                 }else{
-                    res.status(401).json({"ok": false, "message": "Las contraseña es invalida"});
+                    res.status(200).json({"ok": false, "message": "Las contraseña es invalida"});
                 }
             }
         })
     }catch(error){
-        return res.status(500).json({"ok": false, message: error.message});
+        return res.status(200).json({"ok": false, message: error.message});
     }
 }
 
@@ -71,6 +71,6 @@ export const deleteUsers = async (req, res) => {
         });
         res.json({"ok": true, "message": "usuario borrado satisfactoriamente"});
     }catch(error){
-        return res.status(500).json({"ok": false, message: error.message});
+        return res.status(200).json({"ok": false, message: error.message});
     }
 }
