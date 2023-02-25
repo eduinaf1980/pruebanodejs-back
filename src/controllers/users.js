@@ -56,7 +56,7 @@ export const loginUsers = async (req, res) => {
                 }
             }
         })
-        res.send({"ok": true, "message": "Se ha creado el usuario satisfactoriamente"});
+        //res.send({"ok": false, "message": "El susario no existe"});
     }catch(error){
         return res.status(500).json({"ok": false, message: error.message});
     }
