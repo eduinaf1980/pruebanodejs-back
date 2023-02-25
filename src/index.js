@@ -1,6 +1,6 @@
 import app from "./app.js";
 import sequelize from "./db/db.js"
-//import "./models/index.js"
+import "./models/index.js"
 
 async function main(){
     try{
