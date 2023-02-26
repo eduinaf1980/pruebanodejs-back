@@ -20,6 +20,15 @@ const Users = sequelize.define('users', {
     password: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+            notNull: {
+                msg: "La password es obligatoria"
+            },
+            len: {
+                args: [8,255],
+                msg: "La password debe tener por lo menos 8 caracteres"
+            }
+        }
     },
     name: {
         type: DataTypes.STRING,

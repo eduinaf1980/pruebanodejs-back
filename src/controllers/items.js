@@ -1,3 +1,4 @@
+import Companies from "../models/companies.js";
 import Items from "../models/items.js";
 
 export const createItems = async (req, res) => {
@@ -10,16 +11,34 @@ export const createItems = async (req, res) => {
         })
         res.send({"ok": true, "message": "Se ha creado el item satisfactoriamente"});
     }catch(error){
-        return res.status(500).json({"ok": false, message: error.message});
+        const cad = error.message.split(",\n");
+        var resu = "{";
+       for(let i = 0; i < cad.length; i++){
+            if(cad[i].includes('descripcion')){
+                resu += '"descripcion": "' + cad[i] + '",'
+            }
+            if(cad[i].includes('codigo')){
+                resu += '"codigo": "' + cad[i] + '",'
+            }
+        }
+        if(resu.slice(-1) == ',') resu = resu.substr(0, (resu.length - 1))
+        resu += "}";
+        console.log(resu)
+        return res.status(200).json({"ok": false, message: resu});
     }
 }
 
 export const getItems = async (req, res) => {
     try{
-        const items = await Items.findAll();
+        const items = await Items.findAll({
+            include: [
+                {model: Companies, as: 'company'}
+            ]
+        });
+        console.log(items)
         res.json({"ok": true, "message": "Items consultados satisfactoriamente", "result": items});
     }catch(error){
-        return res.status(500).json({"ok": false, message: error.message});
+        return res.status(200).json({"ok": false, message: error.message});
     }
 }
 
@@ -33,7 +52,19 @@ export const updateItems = async (req, res) => {
         await item.save();
         res.json({"ok": true, "message": "Item actualizado satisfactoriamente"});
     }catch(error){
-        return res.status(500).json({"ok": false, message: error.message});
+        const cad = error.message.split(",\n");
+        var resu = "{";
+       for(let i = 0; i < cad.length; i++){
+            if(cad[i].includes('descripcion')){
+                resu += '"descripcion": "' + cad[i] + '",'
+            }
+            if(cad[i].includes('codigo')){
+                resu += '"codigo": "' + cad[i] + '",'
+            }
+        }
+        if(resu.slice(-1) == ',') resu = resu.substr(0, (resu.length - 1))
+        resu += "}";
+        return res.status(200).json({"ok": false, message: resu});
     }
 }
 
@@ -47,7 +78,7 @@ export const deleteItems = async (req, res) => {
         });
         res.json({"ok": true, "message": "Item borrado satisfactoriamente"});
     }catch(error){
-        return res.status(500).json({"ok": false, message: error.message});
+        return res.status(200).json({"ok": false, message: error.message});
     }
 }
 
@@ -57,6 +88,6 @@ export const getItem = async (req, res) => {
         const item = await Items.findByPk(id);
         res.json({"ok": true, "message": "Item consultado satisfactoriamente", "result": item});
     }catch(error){
-        return res.status(500).json({"ok": false, message: error.message});
+        return res.status(200).json({"ok": false, message: error.message});
     }
 }

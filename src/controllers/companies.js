@@ -11,7 +11,25 @@ export const createCompanies = async (req, res) => {
         })
         res.send({"ok": true, "message": "Se ha creado la compañia satisfactoriamente"});
     }catch(error){
-        return res.status(500).json({"ok": false, message: error.message});
+        const cad = error.message.split(",\n");
+        var resu = "{";
+       for(let i = 0; i < cad.length; i++){
+            if(cad[i].includes('nit')){
+                resu += '"nit": "' + cad[i] + '",'
+            }
+            if(cad[i].includes('direccion')){
+                resu += '"direccion": "' + cad[i] + '",'
+            }
+            if(cad[i].includes('nombre')){
+                resu += '"nombre": "' + cad[i] + '",'
+            }
+            if(cad[i].includes('telefono')){
+                resu += '"telefono": "' + cad[i] + '"'
+            }
+        }
+        if(resu.slice(-1) == ',') resu = resu.substr(0, (resu.length - 1))
+        resu += "}";
+        return res.status(200).json({"ok": false, message: resu});
     }
 }
 
@@ -20,7 +38,7 @@ export const getCompanies = async (req, res) => {
         const companies = await Companies.findAll();
         res.json({"ok": true, "message": "Compañia consultada satisfactoriamente", "result": companies});
     }catch(error){
-        return res.status(500).json({"ok": false, message: error.message});
+        return res.status(200).json({"ok": false, message: error.message});
     }
 }
 
@@ -34,7 +52,26 @@ export const updateCompanies = async (req, res) => {
         await comp.save();
         res.json({"ok": true, "message": "Compañia actualizada satisfactoriamente"});
     }catch(error){
-        return res.status(500).json({"ok": false, message: error.message});
+        const cad = error.message.split(",\n");
+        var resu = "{";
+       for(let i = 0; i < cad.length; i++){
+            if(cad[i].includes('nit')){
+                resu += '"nit": "' + cad[i] + '",'
+            }
+            if(cad[i].includes('direccion')){
+                resu += '"direccion": "' + cad[i] + '",'
+            }
+            if(cad[i].includes('nombre')){
+                resu += '"nombre": "' + cad[i] + '",'
+            }
+            if(cad[i].includes('telefono')){
+                resu += '"telefono": "' + cad[i] + '"'
+            }
+
+        }
+        if(resu.slice(-1) == ',') resu = resu.substr(0, (resu.length - 1))
+        resu += "}";
+        return res.status(200).json({"ok": false, "message": resu});
     }
 }
 
@@ -48,7 +85,7 @@ export const deleteCompanies = async (req, res) => {
         });
         res.json({"ok": true, "message": "Compañia borrada satisfactoriamente"});
     }catch(error){
-        return res.status(500).json({"ok": false, message: error.message});
+        return res.status(200).json({"ok": false, message: error.message});
     }
 }
 

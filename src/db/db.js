@@ -2,7 +2,7 @@ import Sequelize from "sequelize";
 
 const sequelize = new Sequelize(
     "pruebawork",
-    "eduardo",
+    "postgres",
     "Andf1980",
     {
         host: "localhost",
