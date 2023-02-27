@@ -5,6 +5,6 @@ const apiUsers = Router();
 
 apiUsers.post('/users', createUsers);
 apiUsers.post('/users/login', loginUsers);
-apiUsers.delete('/users', deleteUsers);
+apiUsers.delete('/users/:id', deleteUsers);
 
 export default apiUsers;
