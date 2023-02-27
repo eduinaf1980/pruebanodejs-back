@@ -23,7 +23,6 @@ export const createItems = async (req, res) => {
         }
         if(resu.slice(-1) == ',') resu = resu.substr(0, (resu.length - 1))
         resu += "}";
-        console.log(resu)
         return res.status(200).json({"ok": false, message: resu});
     }
 }
@@ -35,7 +34,6 @@ export const getItems = async (req, res) => {
                 {model: Companies, as: 'company'}
             ]
         });
-        console.log(items)
         res.json({"ok": true, "message": "Items consultados satisfactoriamente", "result": items});
     }catch(error){
         return res.status(200).json({"ok": false, message: error.message});
