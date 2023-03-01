@@ -16,6 +16,7 @@ export const sendFile = (req, res) => {
 
 export const sendPdf = (mail, name, req, res)=>{
 
+
     let smtpTransport = nodemailer.createTransport({
         host:'smtp.gmail.com',
         service:'Gmail',
@@ -38,8 +39,7 @@ export const sendPdf = (mail, name, req, res)=>{
             {
                 content:'src/files/'+name,
                 filename: name,
-                contentType: 'application/pdf',
-                path:pathToAttachment
+                contentType: 'application/pdf'
             }
         ]
     },function(error,info){
