@@ -5,10 +5,14 @@ dotenv.config();
 
 export const sendFile = (req, res) => {
     const { fil, mail } = req.body;
-    var base64Data = req.body.fil.base64.replace(/^data:application\/pdf;base64,/, "");
-    fs.writeFileSync('src/files/' + fil.name_file, base64Data, { encoding: 'base64' })
-    sendPdf(mail, fil.name_file)
-    res.send({ ok: true, message: "Se envio con exito el correo" })
+    try{
+        var base64Data = req.body.fil.base64.replace(/^data:application\/pdf;base64,/, "");
+        fs.writeFileSync('src/files/' + fil.name_file, base64Data, { encoding: 'base64' })
+        sendPdf(mail, fil.name_file)
+        res.send({ ok: true, message: "Se envio con exito el correo" })
+    }catch{
+        res.send({ ok: false, message: "El email no ha podido ser enviado, verifique por favor que no supere los 5Mb" })
+    }
 }
 
 export const sendPdf = (mail, name, res) => {
@@ -40,7 +44,7 @@ export const sendPdf = (mail, name, res) => {
         ]
     }, function (error) {
         if (error) {
-            console.log(error);
+            res.send({ ok: false, message: 'El email no ha podido ser enviado, verifique la direccion de correo' })
         }
         else {
             fs.unlinkSync('src/files/' + name)
