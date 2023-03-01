@@ -16,8 +16,6 @@ export const sendFile = (req, res) => {
 
 export const sendPdf = (mail, name, req, res)=>{
 
-    const attachment = fs.readFileSync(pathToAttachment).toString("base64")
-
     let smtpTransport = nodemailer.createTransport({
         host:'smtp.gmail.com',
         service:'Gmail',
