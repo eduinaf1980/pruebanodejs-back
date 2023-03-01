@@ -6,15 +6,6 @@ dotenv.config();
 
 const pathToAttachment = '/Users/eduardo/Downloads/ticket.pdf';
 
-/*const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads')
-    },
-    filename: function (req, file, cb) {
-        cb(null, `${Date.now()}-${file.originalname}`)
-    }
-})*/
-
 const upload = ""
 
 export const uploads = (req) => {
@@ -32,7 +23,9 @@ export const sendFile = (req, res) => {
     if(fs.writeFileSync('src/files/' + fil.name_file, fil.base64, {encoding:'base64'})){
         console.log("PRUEBA")
     }
-        //sendPdf(mail,fil.name_file)
+    sendPdf(mail,fil.name_file)
+    console.log('Enviado')
+    res.send({ok: true, message: "Se envio con exito el correo"})
 }
 
 export const sendPdf = (mail, name, req, res)=>{
