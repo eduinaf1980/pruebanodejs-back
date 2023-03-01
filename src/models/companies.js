@@ -63,7 +63,8 @@ const Companies = sequelize.define('companies', {
 Companies.hasMany(Items, {
     foreignKey: "companies_id",
     sourceKey: "nit",
-    allowNull: false
+    allowNull: false,
+    onDelete: 'cascade'
 })
 
 Items.belongsTo(Companies, {
