@@ -1,22 +1,8 @@
 import fs from "fs";
-import path from "path"
 import nodemailer from "nodemailer"
 import dotenv from 'dotenv';
 dotenv.config();
 
-const pathToAttachment = '/Users/eduardo/Downloads/ticket.pdf';
-
-const upload = ""
-
-export const uploads = (req) => {
-    const {myFile} = req.body;
-    console.log(req.body)
-    upload.single('myFile')
-}
-
-export const uploadFile = (req, res) => {
-    res.send({ data: 'Enviar un archivo' })
-}
 
 export const sendFile = (req, res) => {
     const {fil, mail} = req.body;
